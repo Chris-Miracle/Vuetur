@@ -1,15 +1,53 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">
+    @{{ user.username }} - {{ fullName}} <!--- {{ Interactions}} -->
+    <strong>Followers: </strong> {{ followers }}
+    <button v-on:click="followUser">
+      Follow
+    </button>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data(){
+    return{
+      followers: 0,
+      followed: 10,
+      user:{
+        id: 1,
+        username: 'thechrisdev',
+        firstName: 'Chris',
+        lastName: 'Miracle',
+        email: 'mcchris54@yahoo.com',
+        isAdmin: true
+      }
+    }
+  },
+  watch:{
+    followers(newFollowerCount, oldFollowerCount){
+      if(oldFollowerCount < newFollowerCount){
+        console.log(`${this.user.username} has gained a follower!`)
+      }
+    }
+  },
+  computed: {
+    fullName(){
+      return `${this.user.firstName} ${this.user.lastName}`;
+    },
+    Interactions(){
+      return `${this.followers} ${this.followed}`;
+    }
+  },
+  methods:{
+    followUser(){
+      this.followers++
+    }
+  },
+  mounted(){
+    this.followUser();
   }
 }
 </script>
@@ -19,8 +57,8 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  min-height: 100vh;
+  background-color: #f3f5fa;
 }
 </style>
